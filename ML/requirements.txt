@@ -1,0 +1,10 @@
+pandas
+numpy
+tensorflow
+prophet
+scikit-learn
+matplotlib
+seaborn
+tqdm
+regex
+holidays
