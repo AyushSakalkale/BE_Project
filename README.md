@@ -16,9 +16,21 @@ A production-level hybrid log anomaly detection system combining Heuristics, Iso
 * [Final Metrics Report](file:///Users/ayushsakalkale/Desktop/final_be/md/FINAL_EVALUATION_REPORT.md)
 * [Frontend User Guide](file:///Users/ayushsakalkale/Desktop/final_be/md/frontend_instructions.md)
 
+## Prerequisites
+
+Ensure you have the following installed on your system:
+* **Docker Desktop** (must be open and running)
+* **Python 3.8+** (for running ML evaluation scripts)
+* **Node.js (v18+)** (for frontend dashboard)
+
 ## Quick Start
 
-1. **Launch Services**:
+1. **Install Python Dependencies** (For running evaluation tests):
+   ```bash
+   pip install -r ML/requirements.txt
+   ```
+
+2. **Launch Services**:
    ```bash
    ./start_project.sh
    ```

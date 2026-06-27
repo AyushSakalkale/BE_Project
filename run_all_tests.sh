@@ -14,6 +14,7 @@ echo -e "${CYAN}${BOLD}=========================================================
 echo -e "${CYAN}${BOLD}     RUNNING HYBRID LOG ANOMALY DETECTION SYSTEM TEST SUITE             ${NC}"
 echo -e "${CYAN}${BOLD}========================================================================${NC}"
 echo -e "Starting all evaluation experiments sequentially on the current codebase..."
+echo -e "${YELLOW}Hint: If you haven't already, please run: pip install -r ML/requirements.txt${NC}"
 echo ""
 
 # 1. Ablation Study
