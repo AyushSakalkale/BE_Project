@@ -140,6 +140,50 @@ graph TD
     ReactDashboard --> N3[Explain Anomaly Modal Dialog]
 ```
 
+### Simplified Core Data Flow
+
+Below is the simplified logical data flow diagram of the hybrid anomaly detection pipeline:
+
+```mermaid
+graph TD
+    A[Log Ingest: Paste / File / API] --> B[FastAPI Gateway]
+    B --> C{Authentication / JWT Check}
+    C -->|Unauthorized| D[401 Unauthorized Error]
+    C -->|Authorized| E[Asynchronous DB Batching Queue]
+    
+    %% Detection Layer
+    E --> F[Combined Hybrid Detection Engine]
+    subgraph "Hybrid Detection Layers"
+        F --> F1[Heuristic Safety Net: Regex Matcher]
+        F --> F2[Isolation Forest: 17 Structural Features]
+        F --> F3[LSTM Sequencer: State Machine Transition Classifier]
+        F --> F4[Prophet: Temporal Volume Trend Predictor]
+    end
+    
+    %% Consensus & Aggregation
+    F1 --> G[Weighted Consensus Decision Layer]
+    F2 --> G
+    F3 --> G
+    F4 --> G
+    
+    G --> H{Final Score > 0.5 or Overrides?}
+    H -->|Yes| I[Flag Anomaly = True]
+    H -->|No| J[Flag Anomaly = False]
+    
+    %% AI Explanations
+    I --> K[Hugging Face AI Explanation Generator]
+    K --> L[PostgreSQL Storage]
+    J --> L
+    
+    %% Frontend Consumption
+    L --> M[FastAPI Dashboard API]
+    M --> N[React Frontend Dashboard]
+    N --> N1[Zustand Session Management]
+    N --> N2[Recharts Time-Series Graph]
+    N --> N3[Explain Anomaly Modal Dialog]
+```
+
+
 ## Detailed Technology Stack & Functions
 
 | Component / Layer | Technology | Function in this Project |
