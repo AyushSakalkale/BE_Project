@@ -1,0 +1,21 @@
+**Engineering Justification for the Project Pivot**
+
+During the development phase, we realized that low-level SDN packet-filtering simulations using Mininet and Ryu are limited to analyzing network topology and traffic flow. These simulations primarily provide metadata such as IP addresses, ports, packet counts, and bandwidth usage, but they lack visibility into application behavior, service health, database interactions, and software-level failures. Since modern AIOps platforms emphasize application observability rather than only network monitoring, we deliberately transitioned the project to an OpenTelemetry-based application telemetry architecture.
+
+This transition was a conscious engineering decision to align the project with current cloud-native industry practices. OpenTelemetry enables collection of logs, traces, and application metrics directly from services, allowing the system to detect failures such as database connection exhaustion, runtime exceptions, configuration errors, and semantic anomalies that cannot be identified through packet-level analysis alone.
+
+Another important reason for this change was the limitation of Mininet as an academic simulation environment. While Mininet is valuable for studying Software Defined Networks, it does not represent real production deployments. Therefore, we implemented a real-time telemetry ingestion pipeline using FastAPI, Redis as a buffering queue, and PostgreSQL for persistent storage. This architecture supports direct integration with real applications instrumented using OpenTelemetry SDKs, making the system scalable and deployment-ready.
+
+The new implementation also enabled a more comprehensive anomaly detection framework. Instead of focusing only on network traffic anomalies such as DDoS attacks, the system performs multi-dimensional analysis using an ensemble of machine learning models:
+
+* Structural anomaly detection using Isolation Forest with multiple extracted log features.
+* Sequential anomaly detection using an LSTM model to identify abnormal execution paths and state transitions.
+* Temporal anomaly detection using Facebook Prophet to detect unusual trends and spikes in log volume.
+
+Finally, the detected anomalies are analyzed using an LLM-based explainability module, which generates human-readable root cause analysis and remediation suggestions. This provides operators with actionable insights instead of simply indicating that abnormal traffic exists.
+
+**Summary for the Examiner:**
+
+"Although the initial project proposal explored SDN-based DDoS detection using Mininet and Ryu, the implementation was intentionally evolved to address modern cloud-native AIOps requirements. The final system is a deployable OpenTelemetry-based application observability platform that combines real-time telemetry ingestion, multi-model machine learning anomaly detection, and AI-driven root cause analysis, making it more aligned with current industry standards and production environments."
+
+You can copy and paste this directly into your report or present it during your viva.

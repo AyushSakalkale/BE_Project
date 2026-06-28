@@ -1,4 +1,4 @@
-#!/bin/bash
+1#!/bin/bash
 
 # Visual styling
 GREEN='\033[0;32m'
