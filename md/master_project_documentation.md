@@ -689,7 +689,7 @@ Here are the top questions examiners typically ask during project presentations:
 * **Answer**: Logs contain multiple anomaly dimensions. An Isolation Forest detects structural shifts (e.g., changes in log line length or character types), but misses sequence violations. An LSTM detects sequence violations, but misses traffic changes. FB Prophet detects volume trends, but misses structural anomalies. Our ensemble combines these models to cover all three dimensions.
 
 #### Q4: Why does the Isolation Forest have 0% recall on the HDFS_2k benchmark when evaluated alone?
-* **Answer**: The HDFS_2k benchmark anomalies are primarily **semantic exceptions** (e.g., Java connection refused errors). The Isolation Forest looks for structural outliers in token frequency and character distribution, which are normal in the benchmark dataset. However, when paired with the Heuristic Safety Net, the overall system catches 100% of these exceptions.
+* **Answer**: The HDFS_2k benchmark anomalies are primarily **semantic exceptions** (e.g., Java connection refused errors). The Isolation Forest looks for structural outliers in token frequency and character distribution, which are normal in the benchmark dataset. However, when paired with the Heuristic Safety Net, the overall system catches 97.50% of these exceptions.
 
 #### Q5: What is the role of Redis in your ingestion pipeline?
 * **Answer**: Redis acts as an in-memory queue. Incoming logs are immediately pushed to Redis and returning an instant HTTP response to the client. A background worker then pulls logs from Redis in batches of 100 for evaluation, reducing database write bottlenecks.

@@ -18,4 +18,13 @@ Finally, the detected anomalies are analyzed using an LLM-based explainability m
 
 "Although the initial project proposal explored SDN-based DDoS detection using Mininet and Ryu, the implementation was intentionally evolved to address modern cloud-native AIOps requirements. The final system is a deployable OpenTelemetry-based application observability platform that combines real-time telemetry ingestion, multi-model machine learning anomaly detection, and AI-driven root cause analysis, making it more aligned with current industry standards and production environments."
 
-You can copy and paste this directly into your report or present it during your viva.
+
+
+We chose to evaluate our system on the HDFS application log dataset because
+it represents a significantly more complex and realistic challenge than simple 
+network packet counts. Network DDoS detection is essentially a 1-dimensional volume 
+classification task (spikes in traffic). In contrast, microservice logs require a hybrid 
+approach: catching semantic errors, structural formatting drifts, and stateful sequence violations.
+By implementing our hybrid consensus model on application log telemetry, we built a general-purpose 
+observability platform that can ingest any microservice telemetry via the OpenTelemetry standard, which 
+is much more valuable in cloud-native environments
