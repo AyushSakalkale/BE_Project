@@ -130,8 +130,14 @@ graph TD
 ### 3.4 PostgreSQL
 * **What it is**: Relational Database Management System (RDBMS).
 * **Why chosen**: ACID compliance, rich query support, and reliability for transactional user metadata.
-* **Alternatives**: MongoDB (NoSQL) - PostgreSQL was chosen because log monitoring records require relational consistency for user roles and API keys.
+* **Alternatives**: MongoDB (NoSQL).
 * **How it interacts**: Stores persistent log outputs, anomaly tags, and user auth tokens.
+
+#### 3.4.1 Architectural Choice: PostgreSQL vs. Elasticsearch
+Although Elasticsearch is a common choice for log aggregation, we deliberately selected PostgreSQL for the following reasons:
+1. **Relational Schema Security**: Our system requires strict user accounts, JWT password encryption, and multi-tenant `X-API-Key` mappings. Elasticsearch lacks a native relational storage engine, making it unsuited for complex authentication tables.
+2. **Interactive UI Control (React vs. Kibana)**: Kibana displays static dashboards and does not support custom logic (such as clicking an individual log line to trigger a live LLM diagnostic request). By using PostgreSQL, we can query specific logs using REST APIs and render them in a custom React dashboard.
+3. **RAM & Resource Constraints**: Elasticsearch is extremely resource-heavy (typically requiring 4GB–8GB RAM). Running a full local stack (Zookeeper, Kafka, Redis, FastAPI, and Flink) alongside Elasticsearch would cause system performance degradation on standard developer environments. PostgreSQL + Redis is highly efficient and lightweight.
 
 ### 3.5 OpenTelemetry (OTel)
 * **What it is**: Vendor-agnostic observability framework.
