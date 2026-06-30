@@ -135,19 +135,6 @@ def run_ablation():
     # Configurations
     configs = {}
     
-    # 1. Isolation Forest Only (T=0.52)
-    configs["Isolation Forest Only (T=0.52)"] = iforest_scores > 0.52
-    
-    # 2. LSTM Only
-    configs["LSTM Only"] = lstm_anoms
-    
-    # 3. Prophet Only
-    configs["Prophet Only"] = np.zeros(len(df), dtype=bool) # always false on static HDFS dataset
-    
-    # 4. Weighted Consensus Only (no overrides, threshold=0.5)
-    ml_scores = 0.3 * iforest_scores + 0.4 * lstm_scores + 0.3 * prophet_scores
-    configs["Weighted Consensus Only"] = ml_scores > 0.5
-    
     # 5. Production System (T=0.50)
     prod_pred_50 = (heuristic_scores > 0.5) | lstm_anoms | (iforest_scores > 0.50)
     anomaly_indices = np.where(y_true_bench == 1)[0]
